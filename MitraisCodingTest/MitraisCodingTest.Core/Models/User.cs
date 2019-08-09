@@ -1,23 +1,33 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MitraisCodingTest.Core.Models
 {
-    public class User
+    [Table("UserRegistration")]
+    public class User : BaseModel
     {
-        public int ID { get; set; }
+        [Key]
+        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Column("UserId")]
+        public override int Id { get; set; }
 
-        public string MobileNumber { get; set; }
+        [Required]
+        public string Email { get; set; }
 
+        [Required]
         public string Firstname { get; set; }
 
+        [Required]
         public string Lastname { get; set; }
 
-        public string Month { get; set; }
+        [Required]
+        public string MobileNumber { get; set; }
 
         public DateTime? DateOfBirth { get; set; }
 
         public string Gender { get; set; }
 
-        public string Email { get; set; }
     }
 }

@@ -26,5 +26,7 @@ namespace MitraisCodingTest.Models
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid email")]
         public string Email { get; set; }
+
+        public bool IsRegistrationSucceed { get; set; }
     }
 }

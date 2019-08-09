@@ -37,9 +37,16 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="PhoneNumbers, Version=8.10.16.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\libphonenumber-csharp.8.10.16\lib\net46\PhoneNumbers.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,9 +55,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\ItemExistException.cs" />
+    <Compile Include="Exceptions\InvalidValueException.cs" />
+    <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\IMitraisCodingTestContext.cs" />
     <Compile Include="Models\MitraisCodingTestContext.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Interface\IRepository.cs" />
+    <Compile Include="Repositories\Interface\IUserRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Services\Interface\IUserService.cs" />
+    <Compile Include="Services\Request\UserRequest.cs" />
+    <Compile Include="Services\Response\UserResponse.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,53 +1,73 @@
-﻿using MitraisCodingTest.Core.Models;
+﻿using MitraisCodingTest.Core.Exceptions;
+using MitraisCodingTest.Core.Services.Interface;
+using MitraisCodingTest.Core.Services.Request;
 using MitraisCodingTest.Models;
+using System;
 using System.Web.Mvc;
 
 namespace MitraisCodingTest.Controllers
 {
     public class RegistrationController : Controller
     {
+        private readonly IUserService _userService;
+
+        public RegistrationController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
         public ActionResult Create()
         {
-            var registrationModel = new RegistrationModel();
-            registrationModel.Gender = "Male";
+            var model = new RegistrationModel
+            {
+                Gender = "Male",
+                IsRegistrationSucceed = false
+            };
 
-            return View(registrationModel);
+            return View(model);
         }
 
         [HttpPost]
         public ActionResult Create(RegistrationModel model)
         {
-            if (!IsValidDateOfBirth(model))
+            try
             {
-                ModelState.AddModelError(string.Empty, "Date of Birth is invalid");
-            }
-
-            using (var ctx = new MitraisCodingTestContext())
-            {
-                var stud = new User()
-                { 
+                var request = new UserRequest
+                {
+                    Date = model.Date,
                     Email = model.Email,
                     Firstname = model.Firstname,
+                    Gender = model.Gender,
                     Lastname = model.Lastname,
                     MobileNumber = model.MobileNumber,
-                    Gender = model.Gender
+                    Month = model.Month,
+                    Year = model.Year
                 };
 
-                ctx.Users.Add(stud);
-                ctx.SaveChanges();
+                _userService.Add(request);
+
+                model.IsRegistrationSucceed = true;
+
+                return View(model);
             }
-
-            return View(model);
-        }
-
-        private bool IsValidDateOfBirth(RegistrationModel model)
-        {
-            if (model.Year == "0" && model.Month == "0" && model.Date == "0")
+            catch (InvalidValueException ex)
             {
-                return true;
+                ModelState.AddModelError(string.Empty, ex.Message);
+                model.IsRegistrationSucceed = false;
+                return View(model);
             }
-
-            return !(model.Year == "0" || model.Month == "0" || model.Date == "0");
+            catch (ItemExistException ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                model.IsRegistrationSucceed = false;
+                return View(model);
+            }
+            catch(Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                model.IsRegistrationSucceed = false;
+                return View(model);
+            }
         }
     }
 }
