@@ -1,4 +1,5 @@
-﻿using MitraisCodingTest.Models;
+﻿using MitraisCodingTest.Core.Models;
+using MitraisCodingTest.Models;
 using System.Web.Mvc;
 
 namespace MitraisCodingTest.Controllers
@@ -19,6 +20,21 @@ namespace MitraisCodingTest.Controllers
             if (!IsValidDateOfBirth(model))
             {
                 ModelState.AddModelError(string.Empty, "Date of Birth is invalid");
+            }
+
+            using (var ctx = new MitraisCodingTestContext())
+            {
+                var stud = new User()
+                { 
+                    Email = model.Email,
+                    Firstname = model.Firstname,
+                    Lastname = model.Lastname,
+                    MobileNumber = model.MobileNumber,
+                    Gender = model.Gender
+                };
+
+                ctx.Users.Add(stud);
+                ctx.SaveChanges();
             }
 
             return View(model);

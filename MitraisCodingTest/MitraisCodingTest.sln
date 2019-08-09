@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MitraisCodingTest", "Mitrai
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MitraisCodingTest.Tests", "MitraisCodingTest.Tests\MitraisCodingTest.Tests.csproj", "{11015534-3558-44EF-AD4C-BD4BD0A046E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MitraisCodingTest.Core", "MitraisCodingTest.Core\MitraisCodingTest.Core.csproj", "{24697D98-F704-4139-BF89-063B906C1153}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{11015534-3558-44EF-AD4C-BD4BD0A046E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11015534-3558-44EF-AD4C-BD4BD0A046E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11015534-3558-44EF-AD4C-BD4BD0A046E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24697D98-F704-4139-BF89-063B906C1153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24697D98-F704-4139-BF89-063B906C1153}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24697D98-F704-4139-BF89-063B906C1153}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24697D98-F704-4139-BF89-063B906C1153}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
