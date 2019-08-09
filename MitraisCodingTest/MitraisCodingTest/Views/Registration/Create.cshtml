@@ -1,0 +1,122 @@
+﻿@model MitraisCodingTest.Models.RegistrationModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h2>Registration</h2>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.MobileNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mobile number" } })
+                @Html.ValidationMessageFor(model => model.MobileNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Firstname, new { htmlAttributes = new { @class = "form-control", @placeholder = "First name" } })
+                @Html.ValidationMessageFor(model => model.Firstname, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { @class = "form-control", @placeholder = "Last name" } })
+                @Html.ValidationMessageFor(model => model.Lastname, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @Html.LabelFor(model => model.Month)
+        <br />
+        @{
+            var months = new SelectList(new[]
+                    {
+                       new SelectListItem {Text = "Month", Value = "0"},
+                       new SelectListItem {Text = "January", Value = "1"},
+                       new SelectListItem {Text = "February", Value = "2"},
+                       new SelectListItem {Text = "March", Value = "3"},
+                       new SelectListItem {Text = "April", Value = "4"},
+                       new SelectListItem {Text = "May", Value = "5"},
+                       new SelectListItem {Text = "June", Value = "6"},
+                       new SelectListItem {Text = "July", Value = "7"},
+                       new SelectListItem {Text = "August", Value = "8"},
+                       new SelectListItem {Text = "September", Value = "9"},
+                       new SelectListItem {Text = "October", Value = "10"},
+                       new SelectListItem {Text = "November", Value = "11"},
+                       new SelectListItem {Text = "December", Value = "12"}
+                   }, "Value", "Text");
+        }
+
+        @{
+            var date = 1;
+            var dateOptions = new List<SelectListItem>();
+            dateOptions.Add(new SelectListItem { Text = "Date", Value = "0" });
+
+            while (date <= 31)
+            {
+                dateOptions.Add(new SelectListItem { Text = date.ToString(), Value = date.ToString() });
+                date++;
+            }
+
+            var dates = new SelectList(dateOptions, "Value", "Text");
+        }
+
+        @{
+            var year = DateTime.Now.Year - 17;
+            var yearOptions = new List<SelectListItem>();
+            yearOptions.Add(new SelectListItem { Text = "Year", Value = "0" });
+
+            while (year >= 1910)
+            {
+                yearOptions.Add(new SelectListItem { Text = year.ToString(), Value = year.ToString() });
+                year--;
+            }
+
+            var years = new SelectList(yearOptions, "Value", "Text");
+        }
+
+        @Html.DropDownListFor(x => x.Month, months)
+        @Html.DropDownListFor(x => x.Date, dates)
+        @Html.DropDownListFor(x => x.Year, years)
+
+        <br />
+        <br />
+
+        <label class="radio-inline">
+            @Html.RadioButtonFor(x => x.Gender, "Male", Model.Gender == "Male" ? new { @checked = "checked" } : null) Male
+        </label>
+        <label class="radio-inline">
+            @Html.RadioButtonFor(x => x.Gender, "Female", Model.Gender == "Female" ? new { @checked = "checked" } : null) Female
+        </label>
+        <br />
+        <br />
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <input type="submit" value="Register" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
