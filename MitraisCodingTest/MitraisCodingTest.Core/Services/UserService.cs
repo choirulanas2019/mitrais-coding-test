@@ -38,8 +38,8 @@ namespace MitraisCodingTest.Core.Services
 
         private void ValidateToAdd(UserRequest request)
         {
-            if (!IsValidMobilePhone(request.MobileNumber)) throw new InvalidValueException("Invalid mobile number");
-            if (_userRepository.IsExistByMobileNumber(GetNationalNumber(request.MobileNumber))) throw new ItemExistException("Mobile number should be unique");
+            if (!IsValidMobilePhone(request.MobileNumber)) throw new InvalidValueException("Mobile number should be Indonesian mobile phone number (with/out +62 or 62 or 0)");
+            if (_userRepository.IsExistByMobileNumber(GetNationalNumber(request.MobileNumber))) throw new ItemExistException("Mobile number should be unique (regardless with/out +62 or 62 or 0)");
             if (!IsValidDateRequest(request)) throw new InvalidValueException("Invalid Date");
             if (_userRepository.IsExistByEmail(request.Email)) throw new ItemExistException("Email should be unique");
         }
@@ -82,8 +82,13 @@ namespace MitraisCodingTest.Core.Services
             return phoneNumber.NationalNumber.ToString();
         }
 
-        private DateTime GetDate(UserRequest request)
+        private DateTime? GetDate(UserRequest request)
         {
+            if (request.Year == ZERO && request.Month == ZERO && request.Date == ZERO)
+            {
+                return null;
+            }
+
             var dateText = $"{request.Month}/{request.Date}/{request.Year}";
             return Convert.ToDateTime(dateText);
         }

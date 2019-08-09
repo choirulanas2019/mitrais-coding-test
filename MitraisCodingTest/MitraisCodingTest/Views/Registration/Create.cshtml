@@ -14,27 +14,54 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             <div class="col-md-12">
-                @Html.EditorFor(model => model.MobileNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mobile number" } })
+                @if (Model.IsRegistrationSucceed)
+                {
+                    @Html.EditorFor(model => model.MobileNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mobile number", @disabled = "disabled" } })
+                }
+                else
+                {
+                    @Html.EditorFor(model => model.MobileNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Mobile number" } })
+                }
+
                 @Html.ValidationMessageFor(model => model.MobileNumber, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-12">
-                @Html.EditorFor(model => model.Firstname, new { htmlAttributes = new { @class = "form-control", @placeholder = "First name" } })
+                @if (Model.IsRegistrationSucceed)
+                {
+                    @Html.EditorFor(model => model.Firstname, new { htmlAttributes = new { @class = "form-control", @placeholder = "First name", @disabled = "disabled" } })
+                }
+                else
+                {
+                    @Html.EditorFor(model => model.Firstname, new { htmlAttributes = new { @class = "form-control", @placeholder = "First name" } })
+                }
+
+
                 @Html.ValidationMessageFor(model => model.Firstname, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-12">
-                @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { @class = "form-control", @placeholder = "Last name" } })
+                @if (Model.IsRegistrationSucceed)
+                {
+                    @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { @class = "form-control", @placeholder = "Last name", @disabled = "disabled" } })
+                }
+                else
+                {
+                    @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { @class = "form-control", @placeholder = "Last name" } })
+                }
+
                 @Html.ValidationMessageFor(model => model.Lastname, "", new { @class = "text-danger" })
             </div>
         </div>
 
         @Html.LabelFor(model => model.Month)
+
         <br />
+
         @{
             var months = new SelectList(new[]
                     {
@@ -82,40 +109,96 @@
             var years = new SelectList(yearOptions, "Value", "Text");
         }
 
-        @Html.DropDownListFor(x => x.Month, months)
-        @Html.DropDownListFor(x => x.Date, dates)
-        @Html.DropDownListFor(x => x.Year, years)
+        @if (Model.IsRegistrationSucceed)
+        {
+            @Html.DropDownListFor(x => x.Month, months, new { @disabled = "disabled" })
+        }
+        else
+        {
+            @Html.DropDownListFor(x => x.Month, months)
+        }
+
+        @if (Model.IsRegistrationSucceed)
+        {
+            @Html.DropDownListFor(x => x.Date, dates, new { @disabled = "disabled" })
+        }
+        else
+        {
+            @Html.DropDownListFor(x => x.Date, dates)
+        }
+
+        @if (Model.IsRegistrationSucceed)
+        {
+            @Html.DropDownListFor(x => x.Year, years, new { @disabled = "disabled" })
+        }
+        else
+        {
+            @Html.DropDownListFor(x => x.Year, years)
+        }
 
         <br />
         <br />
 
-        <label class="radio-inline">
-            @Html.RadioButtonFor(x => x.Gender, "Male", Model.Gender == "Male" ? new { @checked = "checked" } : null) Male
-        </label>
-        <label class="radio-inline">
-            @Html.RadioButtonFor(x => x.Gender, "Female", Model.Gender == "Female" ? new { @checked = "checked" } : null) Female
-        </label>
-        <br />
-        <br />
-
+        @if (Model.IsRegistrationSucceed)
+        {
+            <label class="radio-inline">
+                @Html.RadioButtonFor(x => x.Gender, "Male", new { @checked = "checked", @disabled = "disabled" }) Male
+            </label>
+            <label class="radio-inline">
+                @Html.RadioButtonFor(x => x.Gender, "Female", new { @disabled = "disabled" }) Female
+            </label>
+        }
+        else
+        {
+            <label class="radio-inline">
+                @Html.RadioButtonFor(x => x.Gender, "Male", Model.Gender == "Male" ? new { @checked = "checked" } : null) Male
+            </label>
+            <label class="radio-inline">
+                @Html.RadioButtonFor(x => x.Gender, "Female", Model.Gender == "Female" ? new { @checked = "checked" } : null) Female
+            </label>
+        }
+        <br /> <br />
         <div class="form-group">
             <div class="col-md-12">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
+                @if (Model.IsRegistrationSucceed)
+                {
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email", @disabled = "disabled" } })
+                }
+                else
+                {
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
+                }
+
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-12">
-                <input type="submit" value="Register" class="btn btn-default" />
+                @if (Model.IsRegistrationSucceed)
+                {
+                    <input type="button" value="Register" class="btn btn-default disabled" />
+                }
+                else
+                {
+                    <input type="submit" value="Register" class="btn btn-default" />
+                }
+
+            </div>
+        </div>
+    </div>
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-12">
+                @if (Model.IsRegistrationSucceed)
+                {
+                    <a href="/Login" class="btn btn-default" role="button">Login</a>
+                }
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

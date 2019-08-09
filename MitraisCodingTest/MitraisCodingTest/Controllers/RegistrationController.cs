@@ -46,9 +46,11 @@ namespace MitraisCodingTest.Controllers
 
                 _userService.Add(request);
 
-                model.IsRegistrationSucceed = true;
-
-                return View(model);
+                return View(new RegistrationModel
+                {
+                    Gender = "Male",
+                    IsRegistrationSucceed = true
+                });
             }
             catch (InvalidValueException ex)
             {
